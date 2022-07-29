@@ -1,7 +1,7 @@
 /*
 LedImp is a led module.
 
-Connect to Raspberry Pi:
+Connect to Raspberry Pico:
   - gcc(the longer pin):  any data pin
   - gnd(the shorter pin): any gnd pin
 */

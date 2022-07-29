@@ -1,12 +1,12 @@
 /*
 BuzzerImp is a buzzer module used to generate "beep, beep, ..." sound.
 
-Connect to Raspberry Pi for a 3-pin buzzer mobule:
+Connect to Raspberry Pico for a 3-pin buzzer mobule:
  - vcc: any 3.3v pin
  - gnd: any gnd pin
  - i/o: any data pin
 
-Connect to Raspberry Pi for a 2-pin buzzer mobule:
+Connect to Raspberry Pico for a 2-pin buzzer mobule:
   - vcc(the longer pin):  any data pin
   - gnd(the shorter pin): any gnd pin
 */

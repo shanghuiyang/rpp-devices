@@ -1,7 +1,7 @@
 /*
 IRDetector is a sensor used to detected infrared ray.
 
-Connect to Pi:
+Connect to Pico:
  - vcc: any 3.3v pin
  - gnd: any gnd pin
  - out: any data pin
