@@ -55,7 +55,6 @@ type Display interface {
 // DistanceMeter ...
 type DistanceMeter interface {
 	Dist() (float64, error)
-	Close() error
 }
 
 // Encoder ...

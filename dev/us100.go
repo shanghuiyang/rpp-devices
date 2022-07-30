@@ -21,13 +21,17 @@ GPIO Interface:
 package dev
 
 import (
+	"errors"
 	"time"
 
 	"machine"
 )
 
+const us100Timeout = 1000000000 // 1 sencond
+
 var (
-	trigData byte = 0x55
+	trigData        byte = 0x55
+	errUs100Timeout      = errors.New("timeout")
 )
 
 // US100 ...
@@ -106,15 +110,21 @@ func (us *US100) distFromGPIO() (float64, error) {
 	us.trig.Low()
 	delayUs(1)
 	us.trig.High()
-	delayUs(5)
+	delayUs(1)
 
-	for !us.echo.Get() {
-		delayUs(1)
+	for i := 0; !us.echo.Get(); i++ {
+		if i >= hcsr04Timeout {
+			return 0, errUs100Timeout
+		}
+		delayNs(1)
 	}
 
 	t := time.Now()
-	for us.echo.Get() {
-		delayUs(1)
+	for i := 0; us.echo.Get(); i++ {
+		if i >= hcsr04Timeout {
+			return 0, errUs100Timeout
+		}
+		delayNs(1)
 	}
 
 	dist := time.Since(t).Seconds() * voiceSpeed / 2.0

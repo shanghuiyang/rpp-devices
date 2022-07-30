@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "machine"
 	"time"
 
 	"github.com/shanghuiyang/rpp-devices/dev"
@@ -14,7 +13,6 @@ var (
 )
 
 func main() {
-
 	// us100, err := dev.NewUS100UART(12, 13, 9600)
 	us100, err := dev.NewUS100GPIO(12, 13)
 	if err != nil {
@@ -28,7 +26,7 @@ func main() {
 		}
 
 		dis, err := us100.Dist()
-		if err == nil && dis < 100 {
+		if err == nil && dis < 10 {
 			alert()
 			continue
 		}
