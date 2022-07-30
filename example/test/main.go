@@ -25,8 +25,8 @@ func main() {
 			continue
 		}
 
-		dis, err := us100.Dist()
-		if err == nil && dis < 10 {
+		dist, err := us100.Dist()
+		if err == nil && dist < 100 {
 			alert()
 			continue
 		}

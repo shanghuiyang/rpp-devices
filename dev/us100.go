@@ -77,7 +77,7 @@ func NewUS100UART(txPin, rxPin uint8, baud uint32) (*US100, error) {
 	}, nil
 }
 
-// Value returns the distance in cm to objects
+// Value returns the distance in cm
 func (us *US100) Dist() (float64, error) {
 	if us.iface == UART {
 		return us.distFromUART()
