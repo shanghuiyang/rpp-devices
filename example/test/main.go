@@ -36,11 +36,11 @@ func main() {
 }
 
 func alert() {
-	led.On()
-	buz.On()
+	go led.On()
+	go buz.On()
 	time.Sleep(time.Millisecond * 100)
 
-	led.Off()
-	buz.Off()
+	go led.Off()
+	go buz.Off()
 	time.Sleep(time.Millisecond * 500)
 }
