@@ -1,6 +1,9 @@
 package dev
 
-import "image"
+import (
+	"image"
+	"machine"
+)
 
 // Accelerometer ...
 type Accelerometer interface {
@@ -159,4 +162,11 @@ type Wireless interface {
 	Sleep()
 	Wakeup()
 	Close() error
+}
+
+type PWM interface {
+	Configure(config machine.PWMConfig) error
+	Channel(pin machine.Pin) (channel uint8, err error)
+	Top() uint32
+	Set(channel uint8, value uint32)
 }
