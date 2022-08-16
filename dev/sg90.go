@@ -62,8 +62,8 @@ func (sg *SG90) Roll(angle float64) error {
 		return nil
 	}
 
-	ms := 1500 - angle*100/9 // angle to millisecond
-	v := uint32(sg.pwm.Top()) * uint32(ms) / (pwmPeriod / 1000)
+	us := 1500 - angle*100/9 // angle to microseconds
+	v := uint32(sg.pwm.Top()) * uint32(us) / (pwmPeriod / 1000)
 	sg.pwm.Set(sg.ch, v)
 	return nil
 }

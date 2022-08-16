@@ -2,7 +2,7 @@
 HC-SR04 is an ultrasonic distance meter used to measure the distance to objects.
 
 Connect to Raspberry Pi:
-  - vcc:	any 5v pin
+  - vcc:	any 3.3v or 5v pin
   - gnd:	any gnd pin
   - trig:	any data pin
   - echo:	any data pin
@@ -41,9 +41,9 @@ func NewHCSR04(trig int8, echo int8) *HCSR04 {
 // Value returns distance in cm to objects
 func (hc *HCSR04) Dist() (float64, error) {
 	hc.trig.Low()
-	delayMs(2)
+	delayMs(1)
 	hc.trig.High()
-	delayMs(10)
+	delayMs(1)
 	hc.trig.Low()
 
 	for i := 0; !hc.echo.Get(); i++ {

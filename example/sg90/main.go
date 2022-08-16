@@ -14,8 +14,15 @@ func main() {
 		return
 	}
 
-	for i := -90; i <= 90; i += 10 {
-		sg90.Roll(float64(i))
-		time.Sleep(time.Millisecond * 1000)
-	}
+	// roll clockwise 30 degree
+	sg90.Roll(30)
+	time.Sleep(1 * time.Second)
+
+	// roll to 0 degree
+	sg90.Roll(0)
+	time.Sleep(1 * time.Second)
+
+	// roll anticlockwise 30 degree
+	sg90.Roll(-30)
+	time.Sleep(1 * time.Second)
 }

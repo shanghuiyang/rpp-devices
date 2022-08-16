@@ -7,23 +7,16 @@ import (
 )
 
 const (
-	trigPin = 12
-	echoPin = 13
+	trigPin = 16
+	echoPin = 17
 	ledPin  = 25
 )
 
 func main() {
-	// new a us100 using GPIO interface
-	us100, err := dev.NewUS100GPIO(12, 13)
-	if err != nil {
-		return
-	}
-	// or using UART interface
-	// us100, err := dev.NewUS100UART(12, 13, 9600)
-
+	hcsr := dev.NewHCSR04(trigPin, echoPin)
 	led := dev.NewLedImp(ledPin)
 	for {
-		dist, err := us100.Dist()
+		dist, err := hcsr.Dist()
 		if err != nil {
 			time.Sleep(time.Millisecond * 100)
 			continue
