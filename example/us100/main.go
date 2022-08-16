@@ -14,7 +14,7 @@ const (
 
 func main() {
 	// new a us100 using GPIO interface
-	us100, err := dev.NewUS100GPIO(12, 13)
+	us100, err := dev.NewUS100GPIO(trigPin, echoPin)
 	if err != nil {
 		return
 	}
