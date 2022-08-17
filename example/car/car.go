@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/shanghuiyang/rpp-devices/dev"
 )
 
@@ -21,9 +23,9 @@ func (c *car) Stop() {
 	c.l298n.MotorAStop()
 }
 
-func (c *car) Turn(angle float64, sec int) {
+func (c *car) Turn(angle float64, turnTimeMs int) {
 	c.sg90.Roll(angle * (-1))
 	c.Backward()
-	delaySec(turnTimeSec)
+	delayMs(time.Duration(turnTimeMs))
 	c.sg90.Roll(0)
 }

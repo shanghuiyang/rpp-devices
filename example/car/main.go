@@ -17,9 +17,9 @@ const (
 
 const (
 	turnAngle      = 30
-	turnTimeSec    = 2
-	backwardDistCM = 20
-	turnDistCM     = 40
+	turnTimeMs     = 1000 // millisecond
+	backwardDistCM = 15
+	turnDistCM     = 30
 )
 
 const (
@@ -71,25 +71,25 @@ func main() {
 		switch op {
 		case backward:
 			thecar.Backward()
-			delaySec(2)
+			delaySec(1)
 			chOp <- stop
 			continue
 		case stop:
 			fwd = false
 			thecar.Stop()
-			delayMs(20)
+			delayMs(100)
 			chOp <- turn
 			continue
 		case turn:
 			fwd = false
-			thecar.Turn(turnAngle, turnTimeSec)
+			thecar.Turn(turnAngle, turnTimeMs)
 			chOp <- forward
 			continue
 		case forward:
 			if !fwd {
 				fwd = true
 				thecar.Forward()
-				go lookingForObs(chOp)
+				go detectObs(chOp)
 			}
 			delayMs(5)
 			continue
@@ -97,7 +97,7 @@ func main() {
 	}
 }
 
-func lookingForObs(chOp chan operator) {
+func detectObs(chOp chan operator) {
 	for {
 		d, err := distMeter.Dist()
 		for i := 0; err != nil && i < 3; i++ {
@@ -109,7 +109,6 @@ func lookingForObs(chOp chan operator) {
 		}
 
 		if d < backwardDistCM {
-			chOp <- stop
 			chOp <- backward
 			return
 		}
