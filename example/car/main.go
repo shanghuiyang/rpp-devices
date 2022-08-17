@@ -16,8 +16,8 @@ const (
 )
 
 const (
-	turnAngle      = 30
-	turnTimeMs     = 1000 // millisecond
+	turnAngle      = 45
+	turnTimeMs     = 700 // millisecond
 	backwardDistCM = 15
 	turnDistCM     = 30
 )
@@ -71,7 +71,7 @@ func main() {
 		switch op {
 		case backward:
 			thecar.Backward()
-			delaySec(1)
+			delayMs(700)
 			chOp <- stop
 			continue
 		case stop:
