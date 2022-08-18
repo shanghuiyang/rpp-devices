@@ -1,6 +1,8 @@
 /*
 US-100 is an ultrasonic distance meter used to measure the distance to objects.
 US-100 supports both of interfaces: GPIO and UART.
+min distance: 2cm
+max distance: 450cm
 
 Connect to Raspberry Pico:
 GPIO Interface:
@@ -21,17 +23,18 @@ GPIO Interface:
 package dev
 
 import (
-	"errors"
 	"time"
 
 	"machine"
 )
 
-const us100Timeout = 1000000000 // 1 sencond
+const (
+	us100Timeout = 14000000 // Nanosecond, 476m
+	us100MaxDist = 450      // cm
+)
 
 var (
-	trigData        byte = 0x55
-	errUs100Timeout      = errors.New("timeout")
+	trigData byte = 0x55
 )
 
 // US100 ...
@@ -113,16 +116,16 @@ func (us *US100) distFromGPIO() (float64, error) {
 	delayUs(1)
 
 	for i := 0; !us.echo.Get(); i++ {
-		if i >= hcsr04Timeout {
-			return 0, errUs100Timeout
+		if i >= us100Timeout {
+			return us100MaxDist, nil
 		}
 		delayNs(1)
 	}
 
 	t := time.Now()
 	for i := 0; us.echo.Get(); i++ {
-		if i >= hcsr04Timeout {
-			return 0, errUs100Timeout
+		if i >= us100Timeout {
+			return us100MaxDist, nil
 		}
 		delayNs(1)
 	}

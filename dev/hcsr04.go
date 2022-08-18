@@ -1,5 +1,7 @@
 /*
 HC-SR04 is an ultrasonic distance meter used to measure the distance to objects.
+min distance: 2cm
+max distance: 600cm
 
 Connect to Raspberry Pi:
   - vcc:	any 3.3v or 5v pin
@@ -11,14 +13,15 @@ Connect to Raspberry Pi:
 package dev
 
 import (
-	"errors"
 	"time"
 
 	"machine"
 )
 
-const hcsr04Timeout = 1000000000 // 1 sencond
-var errHcsr04Timeout = errors.New("timeout")
+const (
+	hcsr04Timeout = 18000000 // Nanosecond, 612m
+	hcsr04MaxDist = 600      // cm
+)
 
 // HCSR04 implements DistanceMeter interface
 type HCSR04 struct {
@@ -41,14 +44,13 @@ func NewHCSR04(trig int8, echo int8) *HCSR04 {
 // Value returns distance in cm to objects
 func (hc *HCSR04) Dist() (float64, error) {
 	hc.trig.Low()
-	delayMs(1)
+	delayUs(1)
 	hc.trig.High()
-	delayMs(1)
-	hc.trig.Low()
+	delayUs(1)
 
 	for i := 0; !hc.echo.Get(); i++ {
 		if i >= hcsr04Timeout {
-			return 0, errHcsr04Timeout
+			return hcsr04MaxDist, nil
 		}
 		delayNs(1)
 	}
@@ -56,7 +58,7 @@ func (hc *HCSR04) Dist() (float64, error) {
 	t := time.Now()
 	for i := 0; hc.echo.Get(); i++ {
 		if i >= hcsr04Timeout {
-			return 0, errHcsr04Timeout
+			return hcsr04MaxDist, nil
 		}
 		delayNs(1)
 	}
