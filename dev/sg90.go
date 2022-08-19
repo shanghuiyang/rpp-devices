@@ -57,15 +57,15 @@ func NewSG90(pin uint8) (*SG90, error) {
 //         | (*) |
 //         +-----+
 //
-func (sg *SG90) Roll(angle float64) error {
+func (sg *SG90) Roll(angle float64) {
 	if angle < -90 || angle > 90 {
-		return nil
+		return
 	}
 
 	us := 1500 - angle*100/9 // angle to microseconds
 	v := uint32(sg.pwm.Top()) * uint32(us) / (pwmPeriod / 1000)
 	sg.pwm.Set(sg.ch, v)
-	return nil
+	return
 }
 
 // SetSpeed ...

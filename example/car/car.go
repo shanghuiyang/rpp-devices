@@ -7,25 +7,25 @@ import (
 )
 
 type car struct {
-	l298n *dev.L298N
-	sg90  *dev.SG90
+	driver dev.MotorDriver
+	servo  dev.ServoMotor
 }
 
 func (c *car) Forward() {
-	c.l298n.MotorAForward()
+	c.driver.Get(dev.MotorA).Forward()
 }
 
 func (c *car) Backward() {
-	c.l298n.MotorABackward()
+	c.driver.Get(dev.MotorA).Backward()
 }
 
 func (c *car) Stop() {
-	c.l298n.MotorAStop()
+	c.driver.Get(dev.MotorA).Stop()
 }
 
 func (c *car) Turn(angle float64, turnTimeMs int) {
-	c.sg90.Roll(angle * (-1))
+	c.servo.Roll(angle * (-1))
 	c.Backward()
 	delayMs(time.Duration(turnTimeMs))
-	c.sg90.Roll(0)
+	c.servo.Roll(0)
 }

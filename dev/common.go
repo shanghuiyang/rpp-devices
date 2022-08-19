@@ -12,6 +12,16 @@ type (
 )
 
 type StepperMode int
+type MotorName int
+
+const (
+	MotorA MotorName = iota
+	MotorB
+	MotorC
+	MotorD
+	MotorE
+	MotorF
+)
 
 const (
 	FullMode StepperMode = iota

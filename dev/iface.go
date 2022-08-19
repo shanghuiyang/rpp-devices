@@ -95,20 +95,15 @@ type Led interface {
 
 // Motor ...
 type Motor interface {
-	// Rolls roll angle dregee in clockwise direction if angle > 0,
-	// or roll counter-clockwise if angle < 0
-	Roll(angle float64)
-	SetSpeed(speed int)
+	Forward()
+	Backward()
+	Stop()
+	SetSpeed(percent uint)
 }
 
 // MotorDriver ...
 type MotorDriver interface {
-	Forward()
-	Backward()
-	Left()
-	Right()
-	Stop()
-	SetSpeed(s uint32)
+	Get(m MotorName) Motor
 }
 
 // Pump ...
@@ -129,8 +124,16 @@ type Relay interface {
 	Off()
 }
 
-// Stepper ...
-type Stepper interface {
+// ServoMotor ...
+type ServoMotor interface {
+	// Roll gets the servo motor rolls angle dregee in clockwise direction if angle > 0,
+	// or roll in counter-clockwise direction if angle < 0,
+	// motionless if angle = 0.
+	Roll(angle float64)
+}
+
+// StepperMotor ...
+type StepperMotor interface {
 	// Step gets the stepper motor rolls n steps in clockwise direction if angle > 0,
 	// or roll in counter-clockwise direction if n < 0,
 	// or motionless if n = 0.

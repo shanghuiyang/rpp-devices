@@ -37,7 +37,7 @@ var (
 type operator string
 
 func main() {
-	l298n := dev.NewL298N(l298nIn1, l298nIn2, l298nIn3, l298nIn4)
+	l298n := dev.NewMiniL298N(l298nIn1, l298nIn2, l298nIn3, l298nIn4)
 	sg90, err := dev.NewSG90(sg90Pin)
 	if err != nil {
 		return
@@ -47,8 +47,8 @@ func main() {
 		return
 	}
 	thecar = &car{
-		l298n: l298n,
-		sg90:  sg90,
+		driver: l298n,
+		servo:  sg90,
 	}
 	distMeter = us100
 

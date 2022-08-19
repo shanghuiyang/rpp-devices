@@ -14,12 +14,12 @@ const (
 )
 
 func main() {
-	l298n := dev.NewL298N(in1, in2, in3, in4)
-	l298n.MotorAForward()
+	l298n := dev.NewMiniL298N(in1, in2, in3, in4)
+	l298n.Get(dev.MotorA).Forward()
 	time.Sleep(3 * time.Second)
-	l298n.MotorAStop()
+	l298n.Get(dev.MotorA).Stop()
 
-	l298n.MotorBBackward()
+	l298n.Get(dev.MotorB).Backward()
 	time.Sleep(3 * time.Second)
-	l298n.MotorBStop()
+	l298n.Get(dev.MotorB).Stop()
 }
