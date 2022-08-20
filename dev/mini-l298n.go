@@ -27,6 +27,12 @@ type MiniL298N struct {
 	MotorB MotorDriver
 }
 
+// miniL298NMotorDriver implements MotorDriver interface
+type miniL298NMotorDriver struct {
+	in1 machine.Pin
+	in2 machine.Pin
+}
+
 // NewMiniL298N ...
 func NewMiniL298N(in1, in2, in3, in4 uint8) *MiniL298N {
 	l := &MiniL298N{
@@ -34,12 +40,6 @@ func NewMiniL298N(in1, in2, in3, in4 uint8) *MiniL298N {
 		MotorB: newMiniL298NMotorDriver(in3, in4),
 	}
 	return l
-}
-
-// minil298nMotor implements MotorDriver interface
-type miniL298NMotorDriver struct {
-	in1 machine.Pin
-	in2 machine.Pin
 }
 
 func newMiniL298NMotorDriver(in1, in2 uint8) *miniL298NMotorDriver {
