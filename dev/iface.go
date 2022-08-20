@@ -98,7 +98,7 @@ type Motor interface {
 	Forward()
 	Backward()
 	Stop()
-	SetSpeed(percent uint)
+	SetSpeed(percent uint32)
 }
 
 // MotorDriver ...

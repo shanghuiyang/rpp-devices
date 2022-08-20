@@ -27,6 +27,6 @@ func (m *DCMotor) Stop() {
 }
 
 // Speed ...
-func (m *DCMotor) SetSpeed(percent uint) {
+func (m *DCMotor) SetSpeed(percent uint32) {
 	m.driver.SetSpeed(percent)
 }

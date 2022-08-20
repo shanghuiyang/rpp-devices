@@ -43,14 +43,14 @@ type L298N struct {
 // NewL298N ...
 func NewL298N(in1, in2, in3, in4, ena, enb uint8) *L298N {
 	l := &L298N{
-		MotorA: newL298NMotor(in1, in2, ena),
-		MotorB: newL298NMotor(in3, in4, enb),
+		MotorA: newL298NMotorDriver(in1, in2, ena),
+		MotorB: newL298NMotorDriver(in3, in4, enb),
 	}
 	return l
 }
 
 // l298nMotor implements MotorDriver interface
-type l298nMotor struct {
+type l298nMotorDriver struct {
 	in1 machine.Pin
 	in2 machine.Pin
 	en  machine.Pin
@@ -58,8 +58,8 @@ type l298nMotor struct {
 	ch  uint8
 }
 
-func newL298NMotor(in1, in2, en uint8) *l298nMotor {
-	m := &l298nMotor{
+func newL298NMotorDriver(in1, in2, en uint8) *l298nMotorDriver {
+	m := &l298nMotorDriver{
 		in1: machine.Pin(in1),
 		in2: machine.Pin(in2),
 		en:  machine.Pin(en),
@@ -83,28 +83,28 @@ func newL298NMotor(in1, in2, en uint8) *l298nMotor {
 }
 
 // Forward ...
-func (l *l298nMotor) Forward() {
-	l.in1.High()
-	l.in2.Low()
+func (m *l298nMotorDriver) Forward() {
+	m.in1.High()
+	m.in2.Low()
 }
 
 // Backward ...
-func (l *l298nMotor) Backward() {
-	l.in1.Low()
-	l.in2.High()
+func (m *l298nMotorDriver) Backward() {
+	m.in1.Low()
+	m.in2.High()
 }
 
 // Stop ...
-func (l *l298nMotor) Stop() {
-	l.in1.Low()
-	l.in2.Low()
+func (m *l298nMotorDriver) Stop() {
+	m.in1.Low()
+	m.in2.Low()
 }
 
 // Speed ...
-func (l *l298nMotor) SetSpeed(percent uint) {
+func (m *l298nMotorDriver) SetSpeed(percent uint32) {
 	if percent == 0 || percent > 100 {
 		return
 	}
-	v := uint32(100 / percent)
-	l.pwm.Set(l.ch, v)
+	v := m.pwm.Top() / (100 / percent)
+	m.pwm.Set(m.ch, v)
 }

@@ -30,20 +30,20 @@ type MiniL298N struct {
 // NewMiniL298N ...
 func NewMiniL298N(in1, in2, in3, in4 uint8) *MiniL298N {
 	l := &MiniL298N{
-		MotorA: newMiniL298NMotor(in1, in2),
-		MotorB: newMiniL298NMotor(in3, in4),
+		MotorA: newMiniL298NMotorDriver(in1, in2),
+		MotorB: newMiniL298NMotorDriver(in3, in4),
 	}
 	return l
 }
 
 // minil298nMotor implements MotorDriver interface
-type minil298nMotor struct {
+type miniL298NMotorDriver struct {
 	in1 machine.Pin
 	in2 machine.Pin
 }
 
-func newMiniL298NMotor(in1, in2 uint8) *minil298nMotor {
-	m := &minil298nMotor{
+func newMiniL298NMotorDriver(in1, in2 uint8) *miniL298NMotorDriver {
+	m := &miniL298NMotorDriver{
 		in1: machine.Pin(in1),
 		in2: machine.Pin(in2),
 	}
@@ -55,24 +55,24 @@ func newMiniL298NMotor(in1, in2 uint8) *minil298nMotor {
 }
 
 // Forward ...
-func (m *minil298nMotor) Forward() {
+func (m *miniL298NMotorDriver) Forward() {
 	m.in1.High()
 	m.in2.Low()
 }
 
 // Backward ...
-func (m *minil298nMotor) Backward() {
+func (m *miniL298NMotorDriver) Backward() {
 	m.in1.Low()
 	m.in2.High()
 }
 
 // Stop ...
-func (m *minil298nMotor) Stop() {
+func (m *miniL298NMotorDriver) Stop() {
 	m.in1.Low()
 	m.in2.Low()
 }
 
 // SetSpeed ...
-func (m *minil298nMotor) SetSpeed(percent uint) {
+func (m *miniL298NMotorDriver) SetSpeed(percent uint32) {
 
 }
