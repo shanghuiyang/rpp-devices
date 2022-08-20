@@ -17,28 +17,62 @@ Pins:
 */
 package dev
 
-// MiniL298N implements MotorDriver interface
+import (
+	"machine"
+)
+
+// MiniL298N ...
 type MiniL298N struct {
-	motorA Motor
-	motorB Motor
+	MotorA MotorDriver
+	MotorB MotorDriver
 }
 
 // NewMiniL298N ...
 func NewMiniL298N(in1, in2, in3, in4 uint8) *MiniL298N {
 	l := &MiniL298N{
-		motorA: NewDCMotor(in1, in2),
-		motorB: NewDCMotor(in3, in4),
+		MotorA: newMiniL298NMotor(in1, in2),
+		MotorB: newMiniL298NMotor(in3, in4),
 	}
 	return l
 }
 
+// minil298nMotor implements MotorDriver interface
+type minil298nMotor struct {
+	in1 machine.Pin
+	in2 machine.Pin
+}
+
+func newMiniL298NMotor(in1, in2 uint8) *minil298nMotor {
+	m := &minil298nMotor{
+		in1: machine.Pin(in1),
+		in2: machine.Pin(in2),
+	}
+	m.in1.Configure(machine.PinConfig{Mode: machine.PinOutput})
+	m.in2.Configure(machine.PinConfig{Mode: machine.PinOutput})
+	m.in1.Low()
+	m.in2.Low()
+	return m
+}
+
 // Forward ...
-func (l *MiniL298N) Get(m MotorName) Motor {
-	if m == MotorA {
-		return l.motorA
-	}
-	if m == MotorB {
-		return l.motorB
-	}
-	return nil
+func (m *minil298nMotor) Forward() {
+	m.in1.High()
+	m.in2.Low()
+}
+
+// Backward ...
+func (m *minil298nMotor) Backward() {
+	m.in1.Low()
+	m.in2.High()
+}
+
+// Stop ...
+func (m *minil298nMotor) Stop() {
+	m.in1.Low()
+	m.in2.Low()
+}
+
+// SetSpeed ...
+func (m *minil298nMotor) SetSpeed(percent uint) {
+
 }

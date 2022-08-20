@@ -1,47 +1,32 @@
 package dev
 
-import (
-	"machine"
-)
-
 type DCMotor struct {
-	in1 machine.Pin
-	in2 machine.Pin
+	driver MotorDriver
 }
 
 // NewDCMotor ...
-func NewDCMotor(in1, in2 uint8) *DCMotor {
-	m := &DCMotor{
-		in1: machine.Pin(in1),
-		in2: machine.Pin(in2),
+func NewDCMotor(driver MotorDriver) *DCMotor {
+	return &DCMotor{
+		driver: driver,
 	}
-	m.in1.Configure(machine.PinConfig{Mode: machine.PinOutput})
-	m.in2.Configure(machine.PinConfig{Mode: machine.PinOutput})
-
-	m.in1.Low()
-	m.in2.Low()
-	return m
 }
 
 // Forward ...
 func (m *DCMotor) Forward() {
-	m.in1.High()
-	m.in2.Low()
+	m.driver.Forward()
 }
 
 // Backward ...
 func (m *DCMotor) Backward() {
-	m.in1.Low()
-	m.in2.High()
+	m.driver.Backward()
 }
 
 // Stop ...
 func (m *DCMotor) Stop() {
-	m.in1.Low()
-	m.in2.Low()
+	m.driver.Stop()
 }
 
 // Speed ...
 func (m *DCMotor) SetSpeed(percent uint) {
-
+	m.driver.SetSpeed(percent)
 }

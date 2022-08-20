@@ -7,20 +7,20 @@ import (
 )
 
 type car struct {
-	driver dev.MotorDriver
-	servo  dev.ServoMotor
+	motor dev.Motor
+	servo dev.ServoMotor
 }
 
 func (c *car) Forward() {
-	c.driver.Get(dev.MotorA).Forward()
+	c.motor.Forward()
 }
 
 func (c *car) Backward() {
-	c.driver.Get(dev.MotorA).Backward()
+	c.motor.Backward()
 }
 
 func (c *car) Stop() {
-	c.driver.Get(dev.MotorA).Stop()
+	c.motor.Stop()
 }
 
 func (c *car) Turn(angle float64, turnTimeMs int) {

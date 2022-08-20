@@ -103,7 +103,7 @@ type Motor interface {
 
 // MotorDriver ...
 type MotorDriver interface {
-	Get(m MotorName) Motor
+	Motor
 }
 
 // Pump ...
