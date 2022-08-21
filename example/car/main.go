@@ -18,7 +18,7 @@ const (
 const (
 	turnAngle      = 45
 	turnTimeMs     = 700 // millisecond
-	backwardDistCM = 15
+	backwardDistCM = 10
 	turnDistCM     = 30
 )
 

@@ -27,5 +27,7 @@ func (c *car) Turn(angle float64, turnTimeMs int) {
 	c.servo.Roll(angle * (-1))
 	c.Backward()
 	delayMs(time.Duration(turnTimeMs))
+	c.Stop()
 	c.servo.Roll(0)
+	delayMs(100)
 }
