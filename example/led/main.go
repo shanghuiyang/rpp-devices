@@ -6,7 +6,7 @@ import (
 	"github.com/shanghuiyang/rpp-devices/dev"
 )
 
-const ledPin = 28
+const ledPin = 25
 
 func main() {
 	led := dev.NewLedImp(ledPin)

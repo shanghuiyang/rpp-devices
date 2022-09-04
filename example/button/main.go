@@ -1,23 +1,25 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/shanghuiyang/rpp-devices/dev"
 )
 
-const btnPin = 26
+const (
+	btnPin = 26
+	ledPin = 25
+)
 
 func main() {
 	btn := dev.NewButtonImp(btnPin)
+	led := dev.NewLedImp(ledPin)
 	for {
 		if !btn.Pressed() {
 			time.Sleep(10 * time.Millisecond)
 			continue
 		}
-		fmt.Printf("button is pressed")
+		led.Blink(1, 200)
 		time.Sleep(500 * time.Millisecond)
-
 	}
 }
