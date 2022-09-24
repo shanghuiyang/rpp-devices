@@ -48,7 +48,7 @@ func main() {
 
 	led.Blink(3, 100)
 	bot = newPianoBot(s1, s2, s3, s4)
-
+	bot.reset()
 	for {
 		if !btn.Pressed() {
 			delayMs(10)
@@ -62,10 +62,8 @@ func main() {
 func play() {
 	for _, song := range songs {
 		for _, m := range song {
-			key := m[0]
-			delay := m[1]
-			bot.play[key]()
-			delayMs(time.Duration(delay))
+			bot.play(m[0])
+			delayMs(time.Duration(m[1]))
 		}
 		delaySec(1)
 	}

@@ -5,36 +5,57 @@ import (
 )
 
 type pianobot struct {
-	play [9]func()
-	s1   dev.ServoMotor
-	s2   dev.ServoMotor
-	s3   dev.ServoMotor
-	s4   dev.ServoMotor
+	s1 dev.ServoMotor
+	s2 dev.ServoMotor
+	s3 dev.ServoMotor
+	s4 dev.ServoMotor
 }
 
 func newPianoBot(s1, s2, s3, s4 dev.ServoMotor) *pianobot {
-	pb := &pianobot{
+	return &pianobot{
 		s1: s1,
 		s2: s2,
 		s3: s3,
 		s4: s4,
 	}
-	pb.play = [9]func(){
-		pb.play0,
-		pb.play1,
-		pb.play2,
-		pb.play3,
-		pb.play4,
-		pb.play5,
-		pb.play6,
-		pb.play7,
-		pb.play8,
+}
+
+func (pb *pianobot) play(i uint) {
+	switch i {
+	case 0:
+		pb.play0()
+	case 1:
+		pb.play1()
+	case 2:
+		pb.play2()
+	case 3:
+		pb.play3()
+	case 4:
+		pb.play4()
+	case 5:
+		pb.play5()
+	case 6:
+		pb.play6()
+	case 7:
+		pb.play7()
+	case 8:
+		pb.play8()
 	}
-	return pb
+}
+
+func (pb *pianobot) reset() {
+	pb.s1.Roll(0)
+	delayMs(200)
+	pb.s2.Roll(0)
+	delayMs(200)
+	pb.s3.Roll(0)
+	delayMs(200)
+	pb.s4.Roll(0)
+	delayMs(200)
 }
 
 func (pb *pianobot) play0() {
-	delayMs(200)
+	delayMs(300)
 }
 
 func (pb *pianobot) play1() {
