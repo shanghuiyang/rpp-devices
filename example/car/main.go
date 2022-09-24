@@ -1,6 +1,8 @@
 package main
 
 import (
+	"machine"
+
 	"github.com/shanghuiyang/rpp-devices/dev"
 )
 
@@ -39,7 +41,7 @@ type operator string
 func main() {
 	l298n := dev.NewMiniL298N(l298nIn1, l298nIn2, l298nIn3, l298nIn4)
 	motor := dev.NewDCMotor(l298n.MotorA)
-	sg90, err := dev.NewSG90(sg90Pin)
+	sg90, err := dev.NewSG90(sg90Pin, machine.PWM0)
 	if err != nil {
 		return
 	}

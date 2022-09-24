@@ -1,6 +1,7 @@
 package main
 
 import (
+	"machine"
 	"time"
 
 	"github.com/shanghuiyang/rpp-devices/dev"
@@ -9,7 +10,7 @@ import (
 const pin = 16
 
 func main() {
-	sg90, err := dev.NewSG90(pin)
+	sg90, err := dev.NewSG90(pin, machine.PWM0)
 	if err != nil {
 		return
 	}

@@ -22,10 +22,10 @@ type SG90 struct {
 }
 
 // NewSG90 ...
-func NewSG90(pin uint8) (*SG90, error) {
+func NewSG90(pin uint8, pwm PWM) (*SG90, error) {
 	sg := &SG90{
 		pin: machine.Pin(pin),
-		pwm: machine.PWM0,
+		pwm: pwm,
 	}
 	sg.pin.Configure(machine.PinConfig{Mode: machine.PinPWM})
 	sg.pwm.Configure(machine.PWMConfig{
